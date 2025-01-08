@@ -9,19 +9,19 @@ number:
 date:
 consensus: true
 v: 3
-area: AREA
-workgroup: WG Working Group
+area: ""
+workgroup: "Multiformats"
 keyword:
  - next generation
  - unicorn
  - sparkling distributed ledger
 venue:
-  group: WG
-  type: Working Group
-  mail: WG@example.com
-  arch: https://example.com/WG
-  github: USER/REPO
-  latest: https://example.com/LATEST
+  group: "Multiformats"
+  type: ""
+  mail: "multiformats@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/multiformats/"
+  github: "germ-mark/multi-mls-id"
+  latest: "https://germ-mark.github.io/multi-mls-id/draft-xue-multi-mls.html"
 
 author:
  -
