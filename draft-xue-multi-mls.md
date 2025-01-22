@@ -38,7 +38,9 @@ informative:
 
 The Messaging Layer Security (MLS) protocol enables a group of participants to
 negotiate a common cryptographic state for messaging, providing Forward 
-Secrecy (FS) and Post-Compromise Security (PCS). This document describes
+Secrecy (FS) and Post-Compromise Security (PCS). A group of participants may
+find it difficult to agree on a common state - or that reaching eventual consistency
+is impractical for the application. This document describes
 Multi-MLS (MMLS), a protocol for using MLS sessions to protect messages
 among participants without negotiating a common group state
 
@@ -79,12 +81,9 @@ through the use of MLS operations.
 
 # MMLS functions
 
-MMLS, as an application layer atop MLS, has to bind the constituent MLS groups
-into a shared context and designate a sender for each constituent group. For
-example, given an MMLS context identifier, an MLS groupId, and an AS 
-credential, MMLS should validate if that groupId is the designated send 
-group for that AS credential in the bundle of groups represented by
-the MMLS context identifier.
+The primary requirement of MMLS is that for a given MLS group, it adjudicates
+the designated sender credential(s) so that the send group policies can be
+correctly applied, including updates to the designated sender's leafNode.
 
 # Conventions and Definitions
 
