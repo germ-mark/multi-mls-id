@@ -42,7 +42,7 @@ Secrecy (FS) and Post-Compromise Security (PCS). A group of participants may
 find it difficult to agree on a common state - or that reaching eventual consistency
 is impractical for the application. This document describes
 Multi-MLS (MMLS), a protocol for using MLS sessions to protect messages
-among participants without negotiating a common group state
+among participants without negotiating a common group state.
 
 --- middle
 
@@ -62,28 +62,35 @@ set of recipients.
 
 # Send Group Operation
 
-MMLS designates each constituent MLS group as the send group for a
-particular AS credential. Within this send group, we impose these additional
-rules:
+An MLS sender group operates in the following constrained way:
+  * The creator of the group, occupying leaf index 0, is the designated sender
   * Participants only accept MLS commits and application messages authored by the designated sender.
-    * If a commit updates the designated sender's credential, MMLS must authorize the replacement credential as a sender for this MLS group.
-    * 
-  * The designated sender may additionlly accept proposal messages from all
+  * The designated sender may accept proposal messages from all
   participants.
-
-Participants can use the MLS proposal to update their leaf keys and 
-credentials. 
 
 In this way, the MLS send group allows the sender to encrypt messages to a
 a set of recipients the sender chooses (by authoring commits), and update the 
 recipient list and recipients' key material transparently to all recipients
 through the use of MLS operations.
 
+Assuming an honest designated sender, participants who agree to operate the group
+under these constraints will agree on group state. 
+
+(A dishonest sender can send different commits to different participants.
+The MMLS layer can help participants gossip about the commits they see in their
+own send groups)
+
 # MMLS functions
 
-The primary requirement of MMLS is that for a given MLS group, it adjudicates
+~~The primary requirement of MMLS is that for a given MLS group, it adjudicates
 the designated sender credential(s) so that the send group policies can be
-correctly applied, including updates to the designated sender's leafNode.
+correctly applied, including updates to the designated sender's leafNode.~~
+
+(An MMLS layer atop these send groups can provide further structure by relating
+send groups 
+* A recipient _R_ in a send group _A_ can reply-all by creating their own send group
+containing the same participants, and initialized with secrets exported from group _A_.
+)
 
 # Conventions and Definitions
 
