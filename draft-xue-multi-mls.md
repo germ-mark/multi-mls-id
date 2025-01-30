@@ -28,10 +28,17 @@ author:
     fullname: "Mark @ Germ"
     organization: Germ Network, Inc.
     email: "mark@germ.network"
+ -
+    fullname: Joseph W. Lukefahr
+    organization: US Naval Postgraduate School
+    email: "joseph.lukefahr@nps.edu"
 
 normative:
+ RFC9420:
+ draft-ietf-mls-architecture-15:
 
 informative:
+ CAPBR: # Brewer, E., "Towards robust distributed systems (abstract)", ACM, Proceedings of the nineteenth annual ACM symposium on Principles of distributed computing, DOI 10.1145/343477.343502, July 2000, <https://doi.org/10.1145/343477.343502>.
 
 
 --- abstract
@@ -80,6 +87,28 @@ under these constraints will agree on group state.
 The MMLS layer can help participants gossip about the commits they see in their
 own send groups)
 
+# Meeting MLS Delivery Service Requirements
+
+The MLS Architecture Guide {{draft-ietf-mls-architecture-15}} specifies two requirements for an abstract Delivery Service related to message ordering.
+First, Proposal messages should all arrive before the Commit that references them.
+Second, members of an MLS group must agree on a single MLS Commit message that ends each epoch and begins the next one.
+
+An honest centralized DS, in the form of a message queuing server or content distribution network, can guarantee these requirements to be met.
+By controlling the order of messages delivered to MLS participants, for example, it can guarantee that Commit messages always follow their associated Proposal messages.
+By filtering Commit messages based on some pre-determined criteria, it can ensure that only a single Commit message per epoch is delivered to participants.
+
+A decentralized DS, on the other hand, can take the form of a message queuing server without specialized logic for handling MLS messages or, prehaps, simply a local area network.
+These DS instantiations cannot offer any such guarantees.
+
+The MLS Architecture Guide highlights the risk of two MLS participants generating different Commits in the same epoch and then sending them at the same time.
+The impact of this risk is inconsistency of MLS group state among participants.
+This perhaps leads to inability of some authorized participants to read other authorized participants' messages, i.e., a loss of availability of the message-passing service provided by MLS.
+A decentralized DS offers no mitigation strategy for this risk, so the participants themselves must agree on strategies, or in our terminology, operating constraints.
+We could say that the full weight of the CAP theorem is thus levied directly on the MLS participants in this case.
+However, use cases exist that benefit from, or even necessitate, MLS and its accompanying security guarantees for group message passing.
+
+The MMLS operating constraints specified above allow honest participants to form a distributed system that satisfies these requirements despite a decentralized DS.
+
 # MMLS functions
 
 ~~The primary requirement of MMLS is that for a given MLS group, it adjudicates
@@ -91,6 +120,14 @@ send groups
 * A recipient _R_ in a send group _A_ can reply-all by creating their own send group
 containing the same participants, and initialized with secrets exported from group _A_.
 )
+
+Similar to MLS, MMLS provides a participant appliation programming interface (API) with the following functions:
+
+* INIT -- Given a list of MMLS participants, initialize an MMLS context by (1) creating an MLS group, (2) adding all
+other participants (generating a set of Welcome messages and a GroupInfo message), and (3) 
+* UPDATE
+* PROTECT # or encrypt? or create_message?
+* UNPROTECT # or decrypt? or process_message?
 
 # Conventions and Definitions
 
