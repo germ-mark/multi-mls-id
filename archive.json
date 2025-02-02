@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-30T01:35:30.716735+00:00",
+  "timestamp": "2025-02-02T01:40:44.825162+00:00",
   "repo": "germ-mark/multi-mls-id",
   "labels": [
     {
@@ -50,5 +50,70 @@
     }
   ],
   "issues": [],
-  "pulls": []
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDONnQEW86Jgp4z",
+      "title": "meeting mls ds requirements; joe's authorship info",
+      "url": "https://github.com/germ-mark/multi-mls-id/pull/1",
+      "state": "MERGED",
+      "author": "josephlukefahr",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Open to if/where these words should be in the document, but they hopefully provide some additional problem framing",
+      "createdAt": "2025-01-30T14:50:19Z",
+      "updatedAt": "2025-01-30T18:05:21Z",
+      "baseRepository": "germ-mark/multi-mls-id",
+      "baseRefName": "working-draft",
+      "baseRefOid": "b57e3c30e19b197600dd165c4699500d781881a1",
+      "headRepository": "josephlukefahr/multi-mls-id",
+      "headRefName": "jwl-250130",
+      "headRefOid": "c54e3415f21e5f4b36b344fa8a69704c21cbeacd",
+      "closedAt": "2025-01-30T17:15:23Z",
+      "mergedAt": "2025-01-30T17:15:23Z",
+      "mergedBy": "germ-mark",
+      "mergeCommit": {
+        "oid": "0bf4faf0aaefbc848a10e31bcf5731494a1d97ac"
+      },
+      "comments": [
+        {
+          "author": "germ-mark",
+          "authorAssociation": "OWNER",
+          "body": "Thanks for this! Redirecting the destination of the PR to a common working branch",
+          "createdAt": "2025-01-30T17:15:10Z",
+          "updatedAt": "2025-01-30T17:15:10Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDONnQEW86Jh5EK",
+      "title": "mark initial draft",
+      "url": "https://github.com/germ-mark/multi-mls-id/pull/2",
+      "state": "MERGED",
+      "author": "germ-mark",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "merging into a common working branch",
+      "createdAt": "2025-01-30T17:12:47Z",
+      "updatedAt": "2025-01-30T17:12:59Z",
+      "baseRepository": "germ-mark/multi-mls-id",
+      "baseRefName": "working-draft",
+      "baseRefOid": "98b3d2306f0b166008438c06c2152070b5a1687c",
+      "headRepository": "germ-mark/multi-mls-id",
+      "headRefName": "mark/draft",
+      "headRefOid": "041837b32b0ca35b529e08a118e1cd899cdc6d6b",
+      "closedAt": "2025-01-30T17:12:59Z",
+      "mergedAt": "2025-01-30T17:12:59Z",
+      "mergedBy": "germ-mark",
+      "mergeCommit": {
+        "oid": "b57e3c30e19b197600dd165c4699500d781881a1"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
 }
