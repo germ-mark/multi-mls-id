@@ -40,8 +40,6 @@ author:
 normative:
 
 informative:
- CAPBR: # Brewer, E., "Towards robust distributed systems (abstract)", ACM, Proceedings of the nineteenth annual ACM symposium on Principles of distributed computing, DOI 10.1145/343477.343502, July 2000, <https://doi.org/10.1145/343477.343502>.
-
 
 --- abstract
 
@@ -69,27 +67,13 @@ group. This allows each participant to locally and independently determine
 their view of the group membership, and encrypt messages using MLS to that
 set of recipients.
 
-# Send Group Operation
+# Terminology
+Send Group: An MLS group where one designated member authors all messages
+and other members use the group only to receive from the designated sender.
 
-An MLS sender group operates in the following constrained way:
-  * The creator of the group, occupying leaf index 0, is the designated sender
-  * Participants only accept MLS commits and application messages authored by the designated sender.
-  * The designated sender may accept proposal messages from all
-  participants.
+# Protocol Overview
 
-In this way, the MLS send group allows the sender to encrypt messages to a
-a set of recipients the sender chooses (by authoring commits), and update the 
-recipient list and recipients' key material transparently to all recipients
-through the use of MLS operations.
-
-Assuming an honest designated sender, participants who agree to operate the group
-under these constraints will agree on group state. 
-
-(A dishonest sender can send different commits to different participants.
-The MMLS layer can help participants gossip about the commits they see in their
-own send groups)
-
-# Meeting MLS Delivery Service Requirements
+## Meeting MLS Delivery Service Requirements
 
 The MLS Architecture Guide {{draft-ietf-mls-architecture-15}} specifies two requirements for an abstract Delivery Service related to message ordering.
 First, Proposal messages should all arrive before the Commit that references them.
@@ -111,7 +95,27 @@ However, use cases exist that benefit from, or even necessitate, MLS and its acc
 
 The MMLS operating constraints specified above allow honest participants to form a distributed system that satisfies these requirements despite a decentralized DS.
 
-# MMLS functions
+# Send Group Operation
+
+An MLS sender group operates in the following constrained way:
+  * The creator of the group, occupying leaf index 0, is the designated sender
+  * Participants only accept MLS commits and application messages authored by the designated sender.
+  * The designated sender may accept proposal messages from all
+  participants.
+
+In this way, the MLS send group allows the sender to encrypt messages to a
+a set of recipients the sender chooses (by authoring commits), and update the 
+recipient list and recipients' key material transparently to all recipients
+through the use of MLS operations.
+
+Assuming an honest designated sender, participants who agree to operate the group
+under these constraints will agree on group state. 
+
+(A dishonest sender can send different commits to different participants.
+The MMLS layer can help participants gossip about the commits they see in their
+own send groups)
+
+# Group Operations
 
 ~~The primary requirement of MMLS is that for a given MLS group, it adjudicates
 the designated sender credential(s) so that the send group policies can be
@@ -145,6 +149,8 @@ TODO Security
 
 This document has no IANA actions.
 
+# References 
+ CAPBR: # Brewer, E., "Towards robust distributed systems (abstract)", ACM, Proceedings of the nineteenth annual ACM symposium on Principles of distributed computing, DOI 10.1145/343477.343502, July 2000, <https://doi.org/10.1145/343477.343502>.
 
 --- back
 
