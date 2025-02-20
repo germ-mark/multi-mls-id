@@ -9,33 +9,35 @@ number:
 date:
 consensus: true
 v: 3
-area: ""
-workgroup: "Multiformats"
+area: "Security"
+workgroup: "Messaging Layer Security"
 keyword:
- - next generation
- - unicorn
- - sparkling distributed ledger
+ - messaging layer security
+ - end-to-end encryption
+ - post-compromise security
 venue:
-  group: "Multiformats"
-  type: ""
-  mail: "multiformats@ietf.org"
-  arch: "https://mailarchive.ietf.org/arch/browse/multiformats/"
+  group: "Messaging Layer Security"
+  type: "Working Group"
+  mail: "mls@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/mls/"
   github: "germ-mark/multi-mls-id"
   latest: "https://germ-mark.github.io/multi-mls-id/draft-xue-multi-mls.html"
 
 author:
  -
-    fullname: "Mark @ Germ"
+    fullname: "Mark Xue"
     organization: Germ Network, Inc.
     email: "mark@germ.network"
  -
-    fullname: Joseph W. Lukefahr
+    fullname: "Joseph W. Lukefahr"
     organization: US Naval Postgraduate School
     email: "joseph.lukefahr@nps.edu"
+ -
+    fullname: "Britta Hale"
+    organization: US Naval Postgraduate School
+    email: "britta.hale@nps.edu"
 
 normative:
- RFC9420:
- draft-ietf-mls-architecture-15:
 
 informative:
  CAPBR: # Brewer, E., "Towards robust distributed systems (abstract)", ACM, Proceedings of the nineteenth annual ACM symposium on Principles of distributed computing, DOI 10.1145/343477.343502, July 2000, <https://doi.org/10.1145/343477.343502>.
