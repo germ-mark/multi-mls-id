@@ -71,15 +71,16 @@ set of recipients.
 
 Send Group: An MLS group where one designated member authors all messages
 and other members use the group only to receive from the designated sender.
+
 Universe: A set of MLS participants that comprise a MMLS group.
 
 # Protocol Overview
 
 Within a group $G$ of distributed participants, we can resolve state conflict by
-assiging each member local state that only they control. In Multi-MLS, we assign
+assigning each member local state that only they control. In Multi-MLS, we assign
 each member an MLS group to operate as a Send Group. Through the export and
 import of epoch secrets across these send groups, the members of G can 
-accomplish PCS and FS without reaching consensus on shared state.
+accomplish PCS and FS without reaching consensus on global state.
 
 ## Meeting MLS Delivery Service Requirements
 
@@ -112,15 +113,13 @@ The MMLS operating constraints specified above allow honest participants to form
 
 An MLS Send Group operates in the following constrained way:
   * The creator of the group, occupying leaf index 0, is the designated sender
-  * Participants only accept messages from the creator
   * The creator may accept update messages from any participant
+  * Other participants only accept messages from the creator
   * Participants only accept messages as defined in Group Operations
 
 To facilitate binding Send Groups together, we define the following exported values:
    * derived groupid: `MLS-Exporter("derivedGroupId", leafNodePublicSigningKey, Length)`
-   (Mark: I use basic credentials so our construction just feeds in the basic Credential.
-   What do we think is suitable for identifying which member this is derived for? The leafNode signature key? the entire leafNode? The leafNode index?
-   )
+
       This is a unique value for each participant derived from the group's current epoch
    * exportPskId: `MLS-Exporter("exportPskId", "Universe identifier", Length)`
    * exportPSK: `MLS-Exporter("exportPSK", "Universe identifier", Length)`
@@ -134,45 +133,38 @@ Similar to MLS, MMLS provides a participant appliation programming interface (AP
 Given a list of MMLS participants, initialize an MMLS context by (1) creating an MLS group, (2) adding all
 other participants (generating a set of Welcome messages and a GroupInfo message), and (3) 
 It is the responsibility of an MMLS implementation to define the Universe of
-participants and the mechanism of geneating the individual send groups. 
+participants and the mechanism of generating the individual send groups. 
 "MMLS Requirements" sketches one such approach.
 
 * UPDATE
 
-A member Alice of $U$ can update their leafNode in the universe U by authoring a full 
+A member Alice of $U$ can update their leafNode in the universe $U$ by authoring a full 
 or empty commit in Alice's send group, which provides PCS with regard to the committer.
 
 This update commit is also an opportunity to update Alice's credential, in which case
-Alice should distribute corresponding update messages in all other send groups.
+Alice should also distribute corresponding update messages in all other send groups.
 
 * COMMIT
 
-If Alice updates by authoring and distributing an empty commit, other members
-can incorporate Alice's empty commit by generating a partial commit that includes
-a psk proposal with a secret from the epoch after Alice's empty commit. Mechanically,
-
-* Alice distributes an MMLS update - an empty or full commit in Alice's send group,
-   which starts epoch $e$
-* Bob, on observing Alice's commit, can incorporate Alice's MMLS update by
-   * Committing a PSK proposal to Bob's send group using the exportPskId
-      and exportPSK from epoch $e$ of Alice's send group
-   * If Alice's commit updated Alice's credential, Bob should follow Alice's commit,
-   remove Alice's previous leafNode, and add Alice's new leafNode 
-
-If Alice changed their credential in their commit, then Bob shold also include
-Alice's proposed update in Bob's send group.
+When Bob recives Alice's MMLS update (as a full or empty commit in Alice's send group),
+Bob can incorporate PCS from Alice's commit by importing a PSK from Alice's send group.
+Precisely, Bob:
+   * Creates a PSK proposal in Bob's send group using the exportPskId
+      and exportPSK from the epoch of Alice's send group after Alice's MMLS update
+   * If Alice's commit updated Alice's credential, Bob should have received an
+      accompanying update proposal in Bob's send group.
+   * Bob generates a commit covering the PSK proposal (for each send group in which
+   he has observed a new MMLS update), and any update proposals he received.
 
 
 * PROTECT # or encrypt? or create_message?
 A member Bob protects a ciphertext message and encrypting it to $U$ by encrypting it
-as an application message in their send group. As in MLS, before encrypting a
-message, Bob should incorporate updates that they have observed by
-committing PSK's from the latest epoch of each other send group they've observed.
+as an application message in their send group. As in MLS, before encrypting an
+application message, Bob should incorporate any MMLS updates he has received.
 
 Each of the 3 MLS configurations of commit are possible:
 If Bob has no MMLS update to issue, and has seen no credential updates,
-Bob generates a partial commit covering PSK proposals from the latest epoch
-of each send group that has had a PCS update since Bob's last commit.
+Bob generates a partial commit covering PSK proposals from each updated send group.
 
 If Bob has seen credential updates, Bob generates a full commit, and for each
    sender that has issued a MMLS update since Bob's last commit,
@@ -184,8 +176,11 @@ an empty commit.
 
 Members are not required to inject a PSK from a send group if they have only
 observed partial commits.
-(this reduces churn, and I (Mark) don't think this introduces more PCS than incorporating
-the PSK's covered by the partial commit)
+(This allows the distibuted state to stabilize,
+if incorporating changes with a partial commit doesn't induce other members to commit.
+Injecting a PSK from a partial commit covering some PSK proposals
+doesn't add any benefit over importing the same PSK's coverered by the partial commit.
+)
 
 
 * UNPROTECT # or decrypt? or process_message?
@@ -196,10 +191,11 @@ send group.
 # MMLS requirements
 
 The application layer over MLS has the responsibility to define 
-* The Universe of members of this MMLS group
+* The Universe $U$ of members of this MMLS group
 * A universe identifier (as context for key exports)
 * The export key length
-* Additional rules, such as accepted cipher suites
+* Additional common rules, such as accepted cipher suites
+
 (nothing inherently requires the send groups to agree on a cipher suite - 
 each sender could choose their own as long as they agree on export key length
 )
@@ -214,11 +210,12 @@ Assume Alice has keypackages for some other members $M_i$
 Alice can construct a MMLS group
    * with a randomly generated derivedId
    * constructing a commit adding all other members $M_i$
-Alice can distribute the welcomes with an Application Message that indicates
-   * This is a Send Group for Alice
-   * that defines a Universe $U$ as $Alice \cup \{M_i\}$
+
+Alice can distribute the welcomes with an Application Message that indicates 
+   * this is a Send Group for Alice
+   * that defines a Universe $U$ as the members of this group
    * with universe identifier equal to the groupId for Alice's send group
-* and defines a common export key length
+   * and defines a common export key length
 
 # Conventions and Definitions
 
