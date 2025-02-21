@@ -229,11 +229,12 @@ For example, $U$ can be defined over the wire by inferring it from a newly creat
 send group.
 
 Assume Alice has keypackages for some other members $M_i$
+
 Alice can construct a MMLS group
-   * with a randomly generated derivedId
+   * with a randomly generated groupId
    * constructing a commit adding all other members $M_i$
 
-Alice can distribute the welcomes with an Application Message that indicates 
+Alice can distribute the Welcome message with an Application Message that indicates 
    * this is a Send Group for Alice
    * that defines a Universe $U$ as the members of this group
    * with universe identifier equal to the groupId for Alice's send group
