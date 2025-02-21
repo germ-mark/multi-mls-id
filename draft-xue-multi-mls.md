@@ -188,6 +188,27 @@ On receipt of an MLS message, a member can look up the corresponding send group
 by the MLS groupId in the message metadata and attempt to decrypt it with that
 send group.
 
+
+(Mark proposal)
+* REJOIN
+A member of MMLS needs to receive all commits from all other send groups to
+continue to receive messages. A member that has been offline or otherwise
+fails to receive some commits still has the ability to encrypt messagse to (possibly stale)
+credentials of the Universe in their own send group. This offline member Charlie can
+request to be re-join the other send groups by broadcasting an MMLS message
+in their own send group that indicates they are requesting a re-join. Other members
+should have access to a keyPackage message for Charlie, which could be, for example,
+attached to the re-join message.
+
+The psk proposals in each of Charlie's commit serve as an ack of the commits of
+other send groups that Charlie has received, so other members can infer from
+Charlie's send group epoch, the newest epoch Charlie has observed for each send
+group.
+
+Each member can then determine if Charlie is out of date in their send group.
+If necessary, they can author a commit removing Charlie's current leafNode in their
+send group and re-add Charlie using a keyPackage for Charlie.
+
 # MMLS requirements
 
 The application layer over MLS has the responsibility to define 
