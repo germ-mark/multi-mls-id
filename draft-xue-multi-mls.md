@@ -129,13 +129,16 @@ To facilitate binding Send Groups together, we define the following exported val
 
 Similar to MLS, MMLS provides a participant appliation programming interface (API) with the following functions:
 
-* INIT -- Given a list of MMLS participants, initialize an MMLS context by (1) creating an MLS group, (2) adding all
+* INIT
+
+Given a list of MMLS participants, initialize an MMLS context by (1) creating an MLS group, (2) adding all
 other participants (generating a set of Welcome messages and a GroupInfo message), and (3) 
 It is the responsibility of an MMLS implementation to define the Universe of
 participants and the mechanism of geneating the individual send groups. 
 "MMLS Requirements" sketches one such approach.
 
 * UPDATE
+
 A member Alice of $U$ can update their leafNode in the universe U by authoring a full 
 or empty commit in Alice's send group, which provides PCS with regard to the committer.
 
@@ -143,6 +146,7 @@ This update commit is also an opportunity to update Alice's credential, in which
 Alice should distribute corresponding update messages in all other send groups.
 
 * COMMIT
+
 If Alice updates by authoring and distributing an empty commit, other members
 can incorporate Alice's empty commit by generating a partial commit that includes
 a psk proposal with a secret from the epoch after Alice's empty commit. Mechanically,
