@@ -216,7 +216,7 @@ Alice can construct a MMLS group
    * constructing a commit adding all other members $M_i$
 Alice can distribute the welcomes with an Application Message that indicates
    * This is a Send Group for Alice
-   * that defines a Universe $U$ as $Alice \union \{M_i\}$
+   * that defines a Universe $U$ as $Alice \cup \{M_i\}$
    * with universe identifier equal to the groupId for Alice's send group
 * and defines a common export key length
 
