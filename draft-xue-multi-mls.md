@@ -191,14 +191,15 @@ send group.
 
 (Mark proposal)
 * REJOIN
+
 A member of MMLS needs to receive all commits from all other send groups to
 continue to receive messages. A member that has been offline or otherwise
-fails to receive some commits still has the ability to encrypt messagse to (possibly stale)
+fails to receive some commits still has the ability to encrypt messages to (possibly stale)
 credentials of the Universe in their own send group. This offline member Charlie can
 request to be re-join the other send groups by broadcasting an MMLS message
 in their own send group that indicates they are requesting a re-join. Other members
-should have access to a keyPackage message for Charlie, which could be, for example,
-attached to the re-join message.
+should have access to a keyPackage message for Charlie. This could be attached
+to the re-join message if necessary.
 
 The psk proposals in each of Charlie's commit serve as an ack of the commits of
 other send groups that Charlie has received, so other members can infer from
