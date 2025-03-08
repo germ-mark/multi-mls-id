@@ -71,18 +71,21 @@ groups to ensure post-compromise security (PCS) is maintained.
 
 # Terminology
 
-Send Group: An MLS group where one designated member authors all messages
-and other members use the group only to receive from the designated sender.
+Send Group: An MLS group where one designated member (the group 'owner') authors 
+all messages and other members use the group only to receive from the designated sender.
 
-Universe: A set of MLS participants that comprise a MMLS group.
+Universe: A superset of MLS participants comprised of the owners of all Send 
+Groups.
 
 # Protocol Overview
 
-Within a group $G$ of distributed participants, we can resolve state conflict by
+Within a group G of distributed participants, we can resolve state conflict by
 assigning each member local state that only they control. In Multi-MLS, we assign
-each member an MLS group to operate as a Send Group. Through the export and
-import of epoch secrets across these send groups, the members of G can 
-accomplish PCS and FS without reaching consensus on global state.
+each member an MLS group to operate as a Send Group. The Send Group owner can export 
+secrets from other groups owned by the Universe and import the epoch randomness 
+through use of Proposal messages into their own Send Group. This enables each Send Group
+to include entropy from other receive-only members of their Send Group, providing for 
+both PCS and FS without the need to reach global consensus on ordering of updates.
 
 ## Meeting MLS Delivery Service Requirements
 
