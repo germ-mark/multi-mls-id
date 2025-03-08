@@ -69,7 +69,7 @@ of update processing and encrypt messages using MLS accordingingly. This draft
 further addresses how to incorporate randomness from other participant's 'send'
 groups to ensure post-compromise security (PCS) is maintained.
 
-# Terminology
+## Terminology
 
 Send Group: An MLS group where one designated member (the group 'owner') authors
 all messages and other members use the group only to receive from the designated sender.
@@ -77,7 +77,7 @@ all messages and other members use the group only to receive from the designated
 Universe: A superset of MLS participants comprised of the owners of all Send
 Groups.
 
-# Protocol Overview
+## Protocol Overview
 
 Within a group G of distributed participants, we can resolve state conflict by
 assigning each member local state that only they control. In Multi-MLS, we assign
@@ -122,10 +122,12 @@ system that satisfies these requirements despite a decentralized DS.
 # Send Group Operation
 
 An MLS Send Group operates in the following constrained way:
-  * The creator of the group, occupying leaf index 0, is the designated sender
-  * The creator may accept update messages from any participant
-  * Other participants only accept messages from the creator
-  * Participants only accept messages as defined in Group Operations
+  * The creator of the group, occupying leaf index 0, is the designated owner of the Send Group
+  * Other members only accept messages from the owner
+  * Members only accept messages as defined in Group Operations
+  * Each group owner sends Updates in their own Sender Group. To fresh keying material inputs from
+    another member, the group owner creates an exporter key from the other member's Send Group and
+    imports that as a PSK Proposal. 
 
 To facilitate binding Send Groups together, we define the following exported values:
    * derived groupid: `MLS-Exporter("derivedGroupId", leafNodePublicSigningKey, Length)`
