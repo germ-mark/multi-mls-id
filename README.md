@@ -1,6 +1,6 @@
-# TODO - Your title
+# Distributed MLS
 
-This is the working area for the individual Internet-Draft, "TODO - Your title".
+This is the working area for the individual Internet-Draft, "Distributed MLS".
 
 * [Editor's Copy](https://germ-mark.github.io/multi-mls-id/#go.draft-xue-multi-mls.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-xue-multi-mls)
