@@ -120,7 +120,6 @@ To facilitate binding Send Groups together, we define the following exported val
    * derived groupid: `MLS-Exporter("derivedGroupId", leafNodePublicSigningKey, Length)`
 
       This is a unique value for each participant derived from the group's current epoch
-   * exportPskId: `MLS-Exporter("exportPskId", "Universe identifier", Length)`
    * exportPSK: `MLS-Exporter("exportPSK", "Universe identifier", Length)`
 
 # Group Operations
@@ -148,8 +147,7 @@ Alice should also distribute corresponding update messages in all other send gro
 When Bob recives Alice's MMLS update (as a full or empty commit in Alice's send group),
 Bob can incorporate PCS from Alice's commit by importing a PSK from Alice's send group.
 Precisely, Bob:
-   * Creates a PSK proposal in Bob's send group using the exportPskId
-      and exportPSK from the epoch of Alice's send group after Alice's MMLS update
+   * Creates a PSK proposal in Bob's send group using the exportPSK from the epoch of Alice's send group after Alice's MMLS update
    * If Alice's commit updated Alice's credential, Bob should have received an
       accompanying update proposal in Bob's send group.
    * Bob generates a commit covering the PSK proposal (for each send group in which
