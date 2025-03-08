@@ -45,9 +45,9 @@ informative:
 
 The Messaging Layer Security (MLS) protocol enables a group of participants to
 negotiate a common cryptographic state for messaging, providing Forward
-Secrecy (FS) and Post-Compromise Security (PCS). Still, there are some use cases 
+Secrecy (FS) and Post-Compromise Security (PCS). Still, there are some use cases
 where message ordering challenges may make it difficult for a group of
-participants to agree on a common state or use cases where reaching eventual 
+participants to agree on a common state or use cases where reaching eventual
 consistency is impractical for the application. This document describes
 Multi-MLS (MMLS), a protocol for using MLS sessions to protect messages
 among participants without negotiating a common group state.
@@ -61,20 +61,20 @@ may find it impractical to access a centralized Delivery Service (DS), or reach
 consensus on message sequencing to arrive at a consistent commit for each
 MLS epoch.
 
-Multi-MLS is an MLS adaptation for facilitating group messaging in such use 
-cases by instantiating an MLS group per participant, such that each participant 
-has a dedicated 'send' group within a communication superset of such groups. 
-This allows each participant to locally and independently control the sequence 
-of update processing and encrypt messages using MLS accordingingly. This draft 
-further addresses how to incorporate randomness from other participant's 'send' 
+Multi-MLS is an MLS adaptation for facilitating group messaging in such use
+cases by instantiating an MLS group per participant, such that each participant
+has a dedicated 'send' group within a communication superset of such groups.
+This allows each participant to locally and independently control the sequence
+of update processing and encrypt messages using MLS accordingingly. This draft
+further addresses how to incorporate randomness from other participant's 'send'
 groups to ensure post-compromise security (PCS) is maintained.
 
 # Terminology
 
-Send Group: An MLS group where one designated member (the group 'owner') authors 
+Send Group: An MLS group where one designated member (the group 'owner') authors
 all messages and other members use the group only to receive from the designated sender.
 
-Universe: A superset of MLS participants comprised of the owners of all Send 
+Universe: A superset of MLS participants comprised of the owners of all Send
 Groups.
 
 # Protocol Overview
@@ -84,7 +84,7 @@ assigning each member local state that only they control. In Multi-MLS, we assig
 each member an MLS group to operate as a Send Group. The Send Group owner can export
 secrets from other groups owned by the Universe and import the epoch randomness
 through use of Proposal messages into their own Send Group. This enables each Send Group
-to include entropy from other receive-only members of their Send Group, providing for 
+to include entropy from other receive-only members of their Send Group, providing for
 both PCS and FS without the need to reach global consensus on ordering of updates.
 
 ## Meeting MLS Delivery Service Requirements
