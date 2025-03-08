@@ -102,21 +102,21 @@ By filtering Commit messages based on some pre-determined criteria, it can ensur
 that only a single Commit message per epoch is delivered to participants.
 
 A decentralized DS, on the other hand, can take the form of a message queuing server
-without specialized logic for handling MLS messages, a mesh network, or, prehaps, simply 
+without specialized logic for handling MLS messages, a mesh network, or, prehaps, simply
 a local area network. These DS instantiations cannot offer any such guarantees.
 
-The MLS Architecture Guide highlights the risk of two MLS members generating different 
-Commits in the same epoch and then sending them at the same time. The impact of this risk is 
-inconsistency of MLS group state among members. This perhaps leads to inability of some 
-authorized members to read other authorized members' messages, i.e., a loss of availability 
-of the message-passing service provided by MLS. A decentralized DS offers no mitigation 
-strategy for this risk, so the members themselves must agree on strategies, or in our 
-terminology, operating constraints. We could say that the full weight of the CAP theorem 
-is thus levied directly on the MLS members in this case. However, use cases exist that 
-benefit from, or even necessitate, MLS and its accompanying security guarantees for 
+The MLS Architecture Guide highlights the risk of two MLS members generating different
+Commits in the same epoch and then sending them at the same time. The impact of this risk is
+inconsistency of MLS group state among members. This perhaps leads to inability of some
+authorized members to read other authorized members' messages, i.e., a loss of availability
+of the message-passing service provided by MLS. A decentralized DS offers no mitigation
+strategy for this risk, so the members themselves must agree on strategies, or in our
+terminology, operating constraints. We could say that the full weight of the CAP theorem
+is thus levied directly on the MLS members in this case. However, use cases exist that
+benefit from, or even necessitate, MLS and its accompanying security guarantees for
 group message passing.
 
-The DMLS operating constraints specified above allow honest members to form a distributed 
+The DMLS operating constraints specified above allow honest members to form a distributed
 system that satisfies these requirements despite a decentralized DS.
 
 # Send Group Operation
@@ -127,7 +127,7 @@ An MLS Send Group operates in the following constrained way:
   * Members only accept messages as defined in Group Operations
   * Each group owner sends Updates in their own Sender Group. To fresh keying material inputs from
     another member, the group owner creates an exporter key from the other member's Send Group and
-    imports that as a PSK Proposal. 
+    imports that as a PSK Proposal.
 
 To facilitate binding Send Groups together, we define the following exported values:
    * derived groupid: `MLS-Exporter("derivedGroupId", leafNodePublicSigningKey, Length)`
@@ -274,16 +274,16 @@ Alice can distribute the Welcome message with an Application Message that indica
 
 # Security Considerations
 
-DMLS inherits and matches MLS in most security considerations with one notable change to PCS nuances. In 
-MLS each group member can largely control when their updates will be introduced to the group state, with 
-deconfliction only down to the DS. In contrast, in DMLS the Send Group owner controls when key update 
-material is included from each member; namely, every member updates in their own Send Group and fresh 
+DMLS inherits and matches MLS in most security considerations with one notable change to PCS nuances. In
+MLS each group member can largely control when their updates will be introduced to the group state, with
+deconfliction only down to the DS. In contrast, in DMLS the Send Group owner controls when key update
+material is included from each member; namely, every member updates in their own Send Group and fresh
 keying material is then imported to other Send Groups through use of the exporter key and PSK Proposal
-option, with timing controlled by the respective Send Group owners. This means that while the PCS 
-healing frequency of a given member in MLS is under their own control, in DMLS the PCS healing frequency 
-and timeliness of PSK import is controlled by the Send Group owner. However, the Send Group owner is also 
-the only member sending data in the Send Group. This means that there is a natural incentive to update 
-frequently and in a timely manner. 
+option, with timing controlled by the respective Send Group owners. This means that while the PCS
+healing frequency of a given member in MLS is under their own control, in DMLS the PCS healing frequency
+and timeliness of PSK import is controlled by the Send Group owner. However, the Send Group owner is also
+the only member sending data in the Send Group. This means that there is a natural incentive to update
+frequently and in a timely manner.
 
 
 # IANA Considerations
