@@ -1,6 +1,6 @@
 ---
-title: "MLS without a centralized DS"
-abbrev: "Multi MLS"
+title: "Distributed MLS"
+abbrev: "DMLS"
 category: info
 
 docname: draft-xue-multi-mls-latest
@@ -274,7 +274,16 @@ Alice can distribute the Welcome message with an Application Message that indica
 
 # Security Considerations
 
-TODO Security
+DMLS inherits and matches MLS in most security considerations with one notable change to PCS nuances. In 
+MLS each group member can largely control when their updates will be introduced to the group state, with 
+deconfliction only down to the DS. In contrast, in DMLS the Send Group owner controls when key update 
+material is included from each member; namely, every member updates in their own Send Group and fresh 
+keying material is then imported to other Send Groups through use of the exporter key and PSK Proposal
+option, with timing controlled by the respective Send Group owners. This means that while the PCS 
+healing frequency of a given member in MLS is under their own control, in DMLS the PCS healing frequency 
+and timeliness of PSK import is controlled by the Send Group owner. However, the Send Group owner is also 
+the only member sending data in the Send Group. This means that there is a natural incentive to update 
+frequently and in a timely manner. 
 
 
 # IANA Considerations
