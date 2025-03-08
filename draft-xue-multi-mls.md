@@ -67,7 +67,7 @@ has a dedicated 'send' group within a communication superset of such groups.
 This allows each participant to locally and independently control the sequence 
 of update processing and encrypt messages using MLS accordingingly. This draft 
 further addresses how to incorporate randomness from other participant's 'send' 
-groups to ensure post-compromise security (PCS) is maintained. 
+groups to ensure post-compromise security (PCS) is maintained.
 
 # Terminology
 
