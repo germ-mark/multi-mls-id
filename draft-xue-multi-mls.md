@@ -45,9 +45,10 @@ informative:
 
 The Messaging Layer Security (MLS) protocol enables a group of participants to
 negotiate a common cryptographic state for messaging, providing Forward 
-Secrecy (FS) and Post-Compromise Security (PCS). A group of participants may
-find it difficult to agree on a common state - or that reaching eventual consistency
-is impractical for the application. This document describes
+Secrecy (FS) and Post-Compromise Security (PCS). Still, there are some use cases 
+where message ordering challenges may make it difficult for a group of 
+participants to agree on a common state or use cases where reaching eventual 
+consistency is impractical for the application. This document describes
 Multi-MLS (MMLS), a protocol for using MLS sessions to protect messages
 among participants without negotiating a common group state.
 
@@ -55,17 +56,18 @@ among participants without negotiating a common group state.
 
 # Introduction
 
-Participants operating in peer to peer or partitioned network topologies
-may find it impractical to access a centralized Delivery Service, or reach
+Participants operating in peer-to-peer or partitioned network topologies
+may find it impractical to access a centralized Delivery Service (DS), or reach
 consensus on message sequencing to arrive at a consistent commit for each
 MLS epoch.
 
-Multi-MLS is a protocol for users to encrypt messages to multiple recipients
-and update participant's keys to provide FS and PCS. It facilitates group
-messaging by using an MLS group per participant as that participant's send
-group. This allows each participant to locally and independently determine
-their view of the group membership, and encrypt messages using MLS to that
-set of recipients.
+Multi-MLS is an MLS adaptation for facilitating group messaging in such use 
+cases by instantiating an MLS group per participant, such that each participant 
+has a dedicated 'send' group within a communication superset of such groups. 
+This allows each participant to locally and independently control the sequence 
+of update processing and encrypt messages using MLS accordingingly. This draft 
+further addresses how to incorporate randomness from other participant's 'send' 
+groups to ensure post-compromise security (PCS) is maintained. 
 
 # Terminology
 
