@@ -133,7 +133,6 @@ To facilitate binding Send Groups together, we define the following exported val
    * derived groupid: `MLS-Exporter("derivedGroupId", leafNodePublicSigningKey, Length)`
 
       This is a unique value for each participant derived from the group's current epoch
-   * exportPskId: `MLS-Exporter("exportPskId", "Universe identifier", Length)`
    * exportPSK: `MLS-Exporter("exportPSK", "Universe identifier", Length)`
 
 # Group Operations
@@ -216,7 +215,7 @@ by the MLS groupId in the message metadata and attempt to decrypt it with that
 send group.
 
 
-(Mark proposal)
+(proposal)
 * REJOIN
 
 A member of DMLS needs to receive all commits from all other send groups to
