@@ -79,7 +79,7 @@ Universe: A set of MLS participants that comprise a MMLS group.
 Within a group $G$ of distributed participants, we can resolve state conflict by
 assigning each member local state that only they control. In Multi-MLS, we assign
 each member an MLS group to operate as a Send Group. Through the export and
-import of epoch secrets across these send groups, the members of G can
+import of epoch secrets across these send groups, the members of $G$ can
 accomplish PCS and FS without reaching consensus on global state.
 
 ## Meeting MLS Delivery Service Requirements
@@ -124,7 +124,7 @@ To facilitate binding Send Groups together, we define the following exported val
 
 # Group Operations
 
-Similar to MLS, MMLS provides a participant appliation programming interface (API) with the following functions:
+Similar to MLS, MMLS provides a participant application programming interface (API) with the following functions:
 
 * INIT
 
@@ -144,7 +144,7 @@ Alice should also distribute corresponding update messages in all other send gro
 
 * COMMIT
 
-When Bob recives Alice's MMLS update (as a full or empty commit in Alice's send group),
+When Bob receives Alice's MMLS update (as a full or empty commit in Alice's send group),
 Bob can incorporate PCS from Alice's commit by importing a PSK from Alice's send group.
 Precisely, Bob:
    * Creates a PSK proposal in Bob's send group using the exportPSK from the epoch of Alice's send group after Alice's MMLS update
@@ -201,7 +201,7 @@ by the MLS groupId in the message metadata and attempt to decrypt it with that
 send group.
 
 
-(Mark proposal)
+(proposal)
 * REJOIN
 
 A member of MMLS needs to receive all commits from all other send groups to
