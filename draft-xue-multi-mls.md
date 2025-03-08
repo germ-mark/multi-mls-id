@@ -44,10 +44,10 @@ informative:
 --- abstract
 
 The Messaging Layer Security (MLS) protocol enables a group of participants to
-negotiate a common cryptographic state for messaging, providing Forward 
-Secrecy (FS) and Post-Compromise Security (PCS). Still, there are some use cases 
-where message ordering challenges may make it difficult for a group of 
-participants to agree on a common state or use cases where reaching eventual 
+negotiate a common cryptographic state for messaging, providing Forward
+Secrecy (FS) and Post-Compromise Security (PCS). Still, there are some use cases
+where message ordering challenges may make it difficult for a group of
+participants to agree on a common state or use cases where reaching eventual
 consistency is impractical for the application. This document describes
 Multi-MLS (MMLS), a protocol for using MLS sessions to protect messages
 among participants without negotiating a common group state.
@@ -61,36 +61,35 @@ may find it impractical to access a centralized Delivery Service (DS), or reach
 consensus on message sequencing to arrive at a consistent commit for each
 MLS epoch.
 
-Multi-MLS is an MLS adaptation for facilitating group messaging in such use 
-cases by instantiating an MLS group per participant, such that each participant 
-has a dedicated 'send' group within a communication superset of such groups. 
-This allows each participant to locally and independently control the sequence 
-of update processing and encrypt messages using MLS accordingingly. This draft 
-further addresses how to incorporate randomness from other participant's 'send' 
-groups to ensure post-compromise security (PCS) is maintained. 
+Multi-MLS is an MLS adaptation for facilitating group messaging in such use
+cases by instantiating an MLS group per participant, such that each participant
+has a dedicated 'send' group within a communication superset of such groups.
+This allows each participant to locally and independently control the sequence
+of update processing and encrypt messages using MLS accordingingly. This draft
+further addresses how to incorporate randomness from other participant's 'send'
+groups to ensure post-compromise security (PCS) is maintained.
 
 # Terminology
 
-Send Group: An MLS group where one designated member (the group 'owner') authors 
+Send Group: An MLS group where one designated member (the group 'owner') authors
 all messages and other members use the group only to receive from the designated sender.
 
-Universe: A superset of MLS participants comprised of the owners of all Send 
+Universe: A superset of MLS participants comprised of the owners of all Send
 Groups.
 
 # Protocol Overview
 
 Within a group G of distributed participants, we can resolve state conflict by
 assigning each member local state that only they control. In Multi-MLS, we assign
-each member an MLS group to operate as a Send Group. The Send Group owner can export 
-secrets from other groups owned by the Universe and import the epoch randomness 
+each member an MLS group to operate as a Send Group. The Send Group owner can export
+secrets from other groups owned by the Universe and import the epoch randomness
 through use of Proposal messages into their own Send Group. This enables each Send Group
-to include entropy from other receive-only members of their Send Group, providing for 
+to include entropy from other receive-only members of their Send Group, providing for
 both PCS and FS without the need to reach global consensus on ordering of updates.
 
 ## Meeting MLS Delivery Service Requirements
 
-The MLS Architecture Guide {{draft-ietf-mls-architecture-15}} specifies two
-requirements for an abstract Delivery Service related to message ordering.
+The MLS Architecture Guide specifies two requirements for an abstract Delivery Service related to message ordering.
 First, Proposal messages should all arrive before the Commit that references them.
 Second, members of an MLS group must agree on a single MLS Commit message that
 ends each epoch and begins the next one.
@@ -142,14 +141,14 @@ Similar to MLS, MMLS provides a participant appliation programming interface (AP
 * INIT
 
 Given a list of MMLS participants, initialize an MMLS context by (1) creating an MLS group, (2) adding all
-other participants (generating a set of Welcome messages and a GroupInfo message), and (3) 
+other participants (generating a set of Welcome messages and a GroupInfo message), and (3)
 It is the responsibility of an MMLS implementation to define the Universe of
-participants and the mechanism of generating the individual send groups. 
+participants and the mechanism of generating the individual send groups.
 "MMLS Requirements" sketches one such approach.
 
 * UPDATE
 
-A member Alice of $U$ can update their leafNode in the universe $U$ by authoring a full 
+A member Alice of $U$ can update their leafNode in the universe $U$ by authoring a full
 or empty commit in Alice's send group, which provides PCS with regard to the committer.
 
 This update commit is also an opportunity to update Alice's credential, in which case
@@ -167,6 +166,21 @@ Precisely, Bob:
    * Bob generates a commit covering the PSK proposal (for each send group in which
    he has observed a new MMLS update), and any update proposals he received.
 
+The `psk_group_id` for this PSK is more specifically defined as follows:
+```
+psk_group_id = (opaque<8>) groupEpoch | groupId
+```
+where `epoch_bytes` is the byte-vector representation of the epoch in which the exporter was generated, in network byte order.
+Since epoch is of type `uint64`, this results in a fixed 8-byte vector.
+`groupId`, which is of type `opaque<V>`, is then appended to `epoch_bytes`.
+When a `exportPskId` is received as part of an incoming PSK proposal, it can then be processed as follows:
+```
+groupId = exportPskId[8..]
+epoch = (uint64) exportPskId[0..7]
+```
+
+Per {{!RFC9420}}, the `psk_nonce` must be a fresh random value of length `KDF.Nh` when the PSK proposal is generated.
+This ensures key separation between a PSK generated by, for example, (1) a PSK generated by Bob from Alice's group and (2) a PSK generated by Charlie from Alice's group.
 
 * PROTECT # or encrypt? or create_message?
 A member Bob protects a ciphertext message and encrypting it to $U$ by encrypting it
@@ -223,13 +237,13 @@ send group and re-add Charlie using a keyPackage for Charlie.
 
 # MMLS requirements
 
-The application layer over MLS has the responsibility to define 
+The application layer over MLS has the responsibility to define
 * The Universe $U$ of members of this MMLS group
 * A universe identifier (as context for key exports)
 * The export key length
 * Additional common rules, such as accepted cipher suites
 
-(nothing inherently requires the send groups to agree on a cipher suite - 
+(nothing inherently requires the send groups to agree on a cipher suite -
 each sender could choose their own as long as they agree on export key length
 )
 
@@ -245,7 +259,7 @@ Alice can construct a MMLS group
    * with a randomly generated groupId
    * constructing a commit adding all other members $M_i$
 
-Alice can distribute the Welcome message with an Application Message that indicates 
+Alice can distribute the Welcome message with an Application Message that indicates
    * this is a Send Group for Alice
    * that defines a Universe $U$ as the members of this group
    * with universe identifier equal to the groupId for Alice's send group
@@ -265,7 +279,7 @@ TODO Security
 
 This document has no IANA actions.
 
-# References 
+# References
  CAPBR: # Brewer, E., "Towards robust distributed systems (abstract)", ACM, Proceedings of the nineteenth annual ACM symposium on Principles of distributed computing, DOI 10.1145/343477.343502, July 2000, <https://doi.org/10.1145/343477.343502>.
 
 --- back
