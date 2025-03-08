@@ -1257,7 +1257,7 @@ and other members use the group only to receive from the designated sender.<a hr
 <p id="section-3-1">Within a group $G$ of distributed participants, we can resolve state conflict by
 assigning each member local state that only they control. In Multi-MLS, we assign
 each member an MLS group to operate as a Send Group. Through the export and
-import of epoch secrets across these send groups, the members of G can
+import of epoch secrets across these send groups, the members of $G$ can
 accomplish PCS and FS without reaching consensus on global state.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <div id="meeting-mls-delivery-service-requirements">
 <section id="section-3.1">
@@ -1311,7 +1311,7 @@ However, use cases exist that benefit from, or even necessitate, MLS and its acc
       <h2 id="name-group-operations">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-group-operations" class="section-name selfRef">Group Operations</a>
       </h2>
-<p id="section-5-1">Similar to MLS, MMLS provides a participant appliation programming interface (API) with the following functions:<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">Similar to MLS, MMLS provides a participant application programming interface (API) with the following functions:<a href="#section-5-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5-2.1">
           <p id="section-5-2.1.1">INIT<a href="#section-5-2.1.1" class="pilcrow">¶</a></p>
@@ -1336,7 +1336,7 @@ Alice should also distribute corresponding update messages in all other send gro
           <p id="section-5-7.1.1">COMMIT<a href="#section-5-7.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-5-8">When Bob recives Alice's MMLS update (as a full or empty commit in Alice's send group),
+<p id="section-5-8">When Bob receives Alice's MMLS update (as a full or empty commit in Alice's send group),
 Bob can incorporate PCS from Alice's commit by importing a PSK from Alice's send group.
 Precisely, Bob:
    * Creates a PSK proposal in Bob's send group using the exportPSK from the epoch of Alice's send group after Alice's MMLS update
@@ -1390,7 +1390,7 @@ by the MLS groupId in the message metadata and attempt to decrypt it with that
 send group.<a href="#section-5-16.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-5-17">(Mark proposal)
+<p id="section-5-17">(proposal)
 * REJOIN<a href="#section-5-17" class="pilcrow">¶</a></p>
 <p id="section-5-18">A member of MMLS needs to receive all commits from all other send groups to
 continue to receive messages. A member that has been offline or otherwise
