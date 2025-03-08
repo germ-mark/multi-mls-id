@@ -102,17 +102,23 @@ it can guarantee that Commit messages always follow their associated Proposal me
 By filtering Commit messages based on some pre-determined criteria, it can ensure
 that only a single Commit message per epoch is delivered to participants.
 
-A decentralized DS, on the other hand, can take the form of a message queuing server without specialized logic for handling MLS messages or, prehaps, simply a local area network.
-These DS instantiations cannot offer any such guarantees.
+A decentralized DS, on the other hand, can take the form of a message queuing server
+without specialized logic for handling MLS messages, a mesh network, or, prehaps, simply 
+a local area network. These DS instantiations cannot offer any such guarantees.
 
-The MLS Architecture Guide highlights the risk of two MLS participants generating different Commits in the same epoch and then sending them at the same time.
-The impact of this risk is inconsistency of MLS group state among participants.
-This perhaps leads to inability of some authorized participants to read other authorized participants' messages, i.e., a loss of availability of the message-passing service provided by MLS.
-A decentralized DS offers no mitigation strategy for this risk, so the participants themselves must agree on strategies, or in our terminology, operating constraints.
-We could say that the full weight of the CAP theorem is thus levied directly on the MLS participants in this case.
-However, use cases exist that benefit from, or even necessitate, MLS and its accompanying security guarantees for group message passing.
+The MLS Architecture Guide highlights the risk of two MLS members generating different 
+Commits in the same epoch and then sending them at the same time. The impact of this risk is 
+inconsistency of MLS group state among members. This perhaps leads to inability of some 
+authorized members to read other authorized members' messages, i.e., a loss of availability 
+of the message-passing service provided by MLS. A decentralized DS offers no mitigation 
+strategy for this risk, so the members themselves must agree on strategies, or in our 
+terminology, operating constraints. We could say that the full weight of the CAP theorem 
+is thus levied directly on the MLS members in this case. However, use cases exist that 
+benefit from, or even necessitate, MLS and its accompanying security guarantees for 
+group message passing.
 
-The MMLS operating constraints specified above allow honest participants to form a distributed system that satisfies these requirements despite a decentralized DS.
+The MMLS operating constraints specified above allow honest members to form a distributed 
+system that satisfies these requirements despite a decentralized DS.
 
 # Send Group Operation
 
